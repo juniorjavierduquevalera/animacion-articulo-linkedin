@@ -4,18 +4,16 @@ import { useSpring, animated } from '@react-spring/web';
 import './styles.css';
 
 export default function App() {
-  const [open, toggle] = useState(false);
+  const [open, toggle] = useState<boolean>(false);
   const [ref, bounds] = useMeasure();
-  console.log(bounds.width)
-  const props = useSpring({ width: open ? bounds.width : 0 });
-
-  const animatedWidth = props.width.to(x => `${(x !== 100 ? 100 : x).toFixed(0)}%`);
+  const props = useSpring<{ width: number | { to: (value: number) => string } }>({width: open ? bounds.width : 0});
+   const animatedWidth = props.width.to(x => `${((x / bounds.width) * 100).toFixed(0)}%`);
 
   return (
     <div className="container">
       <div ref={ref} className="main" onClick={() => toggle(!open)}>
         <animated.div className="fill" style={props} />
-        <animated.div className="content">{animatedWidth}</animated.div>     
+        <animated.div className="content">{animatedWidth}</animated.div>
       </div>
     </div>
   );

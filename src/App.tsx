@@ -6,8 +6,14 @@ import './styles.css';
 export default function App() {
   const [open, toggle] = useState<boolean>(false);
   const [ref, bounds] = useMeasure();
-  const props = useSpring<{ width: number | { to: (value: number) => string } }>({width: open ? bounds.width : 0});
-   const animatedWidth = props.width.to(x => `${((x / bounds.width) * 100).toFixed(0)}%`);
+  const props = useSpring<{ width: number | { to: (value: number) => string } }>({
+    width: open ? bounds.width : 0
+  });
+
+  const animatedWidth = props.width.to(x => {
+    const width = bounds.width || 1; // Verificación de bounds.width
+    return `${((x / width) * 100).toFixed(0)}%`;
+  });
 
   return (
     <div className="container">
@@ -18,3 +24,4 @@ export default function App() {
     </div>
   );
 }
+

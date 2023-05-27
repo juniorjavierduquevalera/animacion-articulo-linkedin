@@ -11,7 +11,7 @@ export default function App() {
   });
 
   const animatedWidth = props.width.to(x => {
-    const width = bounds.width || 1; // Verificación de bounds.width
+    const width = bounds.width || 1; 
     return `${((x / width) * 100).toFixed(0)}%`;
   });
 
